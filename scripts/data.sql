@@ -1,10 +1,10 @@
 INSERT IGNORE INTO
-    categories (id, nom)
+    categories (id, nom, slug)
 VALUES
-    (1, 'Alimentation'),
-    (2, 'Bâtiment'),
-    (3, 'Fabrication'),
-    (4, 'Services');
+    (1, 'Alimentation', 'alimentation'),
+    (2, 'Bâtiment', 'batiment'),
+    (3, 'Fabrication', 'fabrication'),
+    (4, 'Services', 'services');
 
 
 INSERT IGNORE INTO

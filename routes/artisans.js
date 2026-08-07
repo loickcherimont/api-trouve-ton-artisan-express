@@ -4,9 +4,9 @@ import { getAllArtisans, getArtisanById } from '../services/artisans.js';
 const router = express.Router();
 
 /**
- * GET /artisans
+ * GET /api/artisans
  * @swagger
- * /artisans:
+ * /api/artisans:
  *   get:
  *     summary: Retrieve all artisans.
  *     description: Returns the list of all craftsmen registered on the platform.
@@ -38,9 +38,9 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- * GET /artisans/{id}
+ * GET /api/artisans/{id}
  * @swagger
- * /artisans/{id}:
+ * /api/artisans/{id}:
  *   get:
  *     summary: Retrieve a single artisan by its id.
  *     tags: [Artisans]

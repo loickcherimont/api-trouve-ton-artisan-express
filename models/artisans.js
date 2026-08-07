@@ -66,7 +66,7 @@ const Artisans = sequelize.define('artisans', {
 		type: DataTypes.BOOLEAN,
 		allowNull: false,
 	}
-}, { tableName: 'artisans', freezeTableName: true }
+}, { tableName: 'artisans', freezeTableName: true, timestamps: false }
 );
 
 /**

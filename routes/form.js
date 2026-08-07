@@ -4,9 +4,9 @@ import { allFieldsAreCompleted, cleanUserContactInfos, secureAllFields, isValidE
 const router = express.Router();
 
 /**
- * POST /form/contact
+ * POST /api/contact
  * @swagger
- * /form/contact:
+ * /api/contact:
  *   post:
  *     summary: Submit the contact form.
  *     description: Validates, cleans and secures the contact form before returning a confirmation message.
@@ -41,7 +41,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/contact', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
 		const securedUserInfos = secureAllFields(cleanUserContactInfos(req.body));
 

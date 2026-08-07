@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 
 // Serve the interactive Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -40,12 +40,10 @@ app.use(function (req, res, next) {
 // error handler
 app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
-	res.locals.message = err.message;
-	res.locals.error = req.app.get('env') === 'development' ? err : {};
+	const status = err.status || 500;
+	const message = process.env.NODE_ENV === 'development' ? err.message : 'Internal Server Error';
 
-	// render the error page
-	res.status(err.status || 500);
-	res.render('error');
+	res.status(status).json({ error: status, message });
 });
 
 export default app;

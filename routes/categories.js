@@ -4,9 +4,9 @@ import { getAllCategories } from '../services/categories.js';
 const router = express.Router();
 
 /**
- * GET /categories
+ * GET /api/categories
  * @swagger
- * /categories:
+ * /api/categories:
  *   get:
  *     summary: Retrieve all categories.
  *     description: Returns the list of all professional categories.

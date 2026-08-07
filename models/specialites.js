@@ -26,7 +26,7 @@ const Specialites = sequelize.define('specialites', {
 		allowNull: false,
 		unique: true,
 	}
-}, { tableName: 'specialites', freezeTableName: true }
+}, { tableName: 'specialites', freezeTableName: true, timestamps: false }
 );
 
 /**
