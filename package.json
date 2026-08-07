@@ -17,7 +17,9 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mysql2": "^3.23.2",
-    "sequelize": "^6.37.8"
+    "sequelize": "^6.37.8",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "env-cmd": "^11.0.0",
