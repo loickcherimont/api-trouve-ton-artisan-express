@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize';
  */
 const clientOptions = {
 	hostname: process.env.DB_HOST,
+	port: process.env.DB_PORT,
 	dbName: process.env.DB_NAME,
 	username: process.env.DB_USERNAME,
 	password: process.env.DB_PASSWORD,
@@ -19,6 +20,7 @@ const clientOptions = {
  */
 export const sequelize = new Sequelize(clientOptions.dbName, clientOptions.username, clientOptions.password, {
 	host: clientOptions.hostname,
+	port: clientOptions.port || undefined,
 	dialect: 'mysql'
 });
 

@@ -18,7 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Enable the application to be consumed by external React application
 app.use(cors({
-	origin: process.env.WEB_APP_HOST,
+	origin: process.env.WEB_APP_HOST?.split(',').map((origin) => origin.trim()).filter(Boolean),
 }));
 
 app.use(logger('dev'));
