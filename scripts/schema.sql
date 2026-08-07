@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS artisans (
 	note DECIMAL(2,1) NOT NULL CHECK (note BETWEEN 0 AND 5),
 	ville VARCHAR(100) NOT NULL,
 	a_propos TEXT NOT NULL,
-	email VARCHAR(255) UNIQUE,
+	email VARCHAR(255) NOT NULL UNIQUE,
 	site_web VARCHAR(255),
 	est_en_top_trois BOOLEAN NOT NULL CHECK (est_en_top_trois IN (0, 1)),
     specialites_id INT UNSIGNED NOT NULL,
