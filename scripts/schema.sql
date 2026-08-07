@@ -7,6 +7,7 @@ USE trouve_ton_artisan;
 CREATE TABLE IF NOT EXISTS categories (
     id INT UNSIGNED AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL UNIQUE,
+    slug VARCHAR(100) NOT NULL UNIQUE,
     PRIMARY KEY(id)
 );
 

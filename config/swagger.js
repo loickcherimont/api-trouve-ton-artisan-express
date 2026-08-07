@@ -26,6 +26,7 @@ const swaggerOptions = {
 					properties: {
 						id: { type: 'integer' },
 						nom: { type: 'string', example: 'Bâtiment' },
+						slug: { type: 'string', example: 'batiment' },
 					},
 				},
 				Specialite: {

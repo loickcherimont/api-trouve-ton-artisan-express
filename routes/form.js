@@ -1,12 +1,12 @@
 import express from 'express';
-import { allFieldsAreCompleted, cleanUserContactInfos, secureAllFields, isValidEmail } from '../services/form.js';
+import { allFieldsAreCompleted, cleanUserContactInfos, secureAllFields, isValidEmail, sendMessageTo } from '../services/form.js';
 
 const router = express.Router();
 
 /**
- * POST /form/contact
+ * POST /api/contact
  * @swagger
- * /form/contact:
+ * /api/contact:
  *   post:
  *     summary: Submit the contact form.
  *     description: Validates, cleans and secures the contact form before returning a confirmation message.
@@ -28,6 +28,9 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   example: Merci pour votre message. Vous recevrez une réponse sous 48h.
+ *                 previewUrl:
+ *                   type: string
+ *                   example: https://ethereal.email/message/xxxx
  *       400:
  *         description: Missing field or invalid email address.
  *         content:
@@ -41,7 +44,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/contact', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	try {
 		const securedUserInfos = secureAllFields(cleanUserContactInfos(req.body));
 
@@ -53,7 +56,15 @@ router.post('/contact', async (req, res, next) => {
 			return res.status(400).json({ message: 'Adresse email invalide.' });
 		}
 
-		return res.status(200).json({ message: 'Merci pour votre message. Vous recevrez une réponse sous 48h.' });
+		if (!isValidEmail(securedUserInfos.to)) {
+			return res.status(400).json({ message: 'Adresse email de l\'artisan invalide.' });
+		}
+
+		const previewUrl = await sendMessageTo(securedUserInfos);
+		return res.status(200).json({
+			message: 'Merci pour votre message. Vous recevrez une réponse sous 48h.',
+			previewUrl,
+		});
 	} catch (error) {
 		console.error(error);
 		next(error);

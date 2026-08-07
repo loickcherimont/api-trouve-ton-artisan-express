@@ -23,7 +23,12 @@ const Categories = sequelize.define('categories', {
 		type: DataTypes.STRING(100),
 		allowNull: false,
 		unique: true,
+	},
+	slug: {
+		type: DataTypes.STRING(100),
+		allowNull: false,
+		unique: true,
 	}
-}, { tableName: 'categories', freezeTableName: true });
+}, { tableName: 'categories', freezeTableName: true, timestamps: false });
 
 export default Categories;

@@ -1,16 +1,29 @@
 import express from 'express';
-import { getAllArtisans, getArtisanById } from '../services/artisans.js';
+import { getArtisans, getArtisanById } from '../services/artisans.js';
 
 const router = express.Router();
 
 /**
- * GET /artisans
+ * GET /api/artisans
  * @swagger
- * /artisans:
+ * /api/artisans:
  *   get:
  *     summary: Retrieve all artisans.
  *     description: Returns the list of all craftsmen registered on the platform.
  *     tags: [Artisans]
+ *     parameters:
+ *       - in: query
+ *         name: est_en_top_trois
+ *         required: false
+ *         description: When `true`, only returns the artisans featured in the home page top 3.
+ *         schema:
+ *           type: boolean
+ *       - in: query
+ *         name: nom
+ *         required: false
+ *         description: Search the artisans whose name contains this string (case-insensitive).
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The list of all artisans.
@@ -29,7 +42,17 @@ const router = express.Router();
  */
 router.get('/', async (req, res, next) => {
 	try {
-		const artisans = await getAllArtisans();
+		const filters = {};
+
+		if (req.query.est_en_top_trois !== undefined) {
+			filters.estEnTopTrois = req.query.est_en_top_trois === 'true';
+		}
+
+		if (req.query.nom) {
+			filters.nom = req.query.nom.trim();
+		}
+
+		const artisans = await getArtisans(filters);
 		return res.status(200).json(artisans);
 	} catch (error) {
 		console.error(error);
@@ -38,9 +61,9 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- * GET /artisans/{id}
+ * GET /api/artisans/{id}
  * @swagger
- * /artisans/{id}:
+ * /api/artisans/{id}:
  *   get:
  *     summary: Retrieve a single artisan by its id.
  *     tags: [Artisans]
