@@ -1,3 +1,5 @@
+import { sendContactEmail } from './mailer.js';
+
 /**
  * Checks that every field of the given object has a non-empty value.
  * @param {Object} fields - The fields to validate.
@@ -22,6 +24,7 @@ export function cleanUserContactInfos(userContactInfos) {
 		email: userContactInfos.email?.trim().toLowerCase() ?? '',
 		objet: userContactInfos.objet?.trim() ?? '',
 		message: userContactInfos.message?.trim() ?? '',
+		to: userContactInfos.to?.trim() ?? '',
 	}
 }
 
@@ -51,6 +54,7 @@ export function secureAllFields(fields) {
 		email: escapeHtml(fields.email),
 		objet: escapeHtml(fields.objet),
 		message: escapeHtml(fields.message),
+		to: escapeHtml(fields.to),
 	}
 }
 
@@ -61,4 +65,13 @@ export function secureAllFields(fields) {
  */
 export function isValidEmail(email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/**
+ * Sends the contact form to the artisan by email.
+ * @param {Object} payload - The secured contact form data (nom, email, objet, message, to).
+ * @returns {Promise<string>} The preview URL of the sent email.
+ */
+export async function sendMessageTo(payload) {
+	return sendContactEmail(payload);
 }

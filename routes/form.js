@@ -1,5 +1,5 @@
 import express from 'express';
-import { allFieldsAreCompleted, cleanUserContactInfos, secureAllFields, isValidEmail } from '../services/form.js';
+import { allFieldsAreCompleted, cleanUserContactInfos, secureAllFields, isValidEmail, sendMessageTo } from '../services/form.js';
 
 const router = express.Router();
 
@@ -28,6 +28,9 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   example: Merci pour votre message. Vous recevrez une réponse sous 48h.
+ *                 previewUrl:
+ *                   type: string
+ *                   example: https://ethereal.email/message/xxxx
  *       400:
  *         description: Missing field or invalid email address.
  *         content:
@@ -53,7 +56,15 @@ router.post('/', async (req, res, next) => {
 			return res.status(400).json({ message: 'Adresse email invalide.' });
 		}
 
-		return res.status(200).json({ message: 'Merci pour votre message. Vous recevrez une réponse sous 48h.' });
+		if (!isValidEmail(securedUserInfos.to)) {
+			return res.status(400).json({ message: 'Adresse email de l\'artisan invalide.' });
+		}
+
+		const previewUrl = await sendMessageTo(securedUserInfos);
+		return res.status(200).json({
+			message: 'Merci pour votre message. Vous recevrez une réponse sous 48h.',
+			previewUrl,
+		});
 	} catch (error) {
 		console.error(error);
 		next(error);
