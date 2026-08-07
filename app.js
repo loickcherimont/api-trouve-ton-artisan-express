@@ -7,7 +7,7 @@ import logger from 'morgan';
 import cors from "cors";
 
 import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
+import usersRouter from './routes/categories.js';
 import { initClientDbConnection, sequelize } from './db/mysql.js';
 
 import './models/categories.js';
@@ -15,9 +15,7 @@ import './models/specialites.js';
 import './models/artisans.js';
 
 
-initClientDbConnection();
-
-await sequelize.sync();
+await initClientDbConnection();
 
 const app = express();
 
